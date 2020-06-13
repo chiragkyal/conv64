@@ -24,3 +24,29 @@ def base2img(base64_string,image_type='opencv'):
 	else:
 		print("Unable to Convert to Image: Check Image Type")
 
+
+
+def img2base(image,image_type='opencv'):
+
+	##TODO -> Add different file Extension
+
+	if image_type == 'opencv':
+		
+		#Send Opencv Image 
+		#e.g image = cv2.imread("fig.jpg")
+
+		_, image_arr = cv2.imencode('.jpg', image)
+		image_bytes = image_arr.tobytes()
+		base64_string = base64.b64encode(image_bytes)
+		return base64_string
+
+	elif image_type == 'pillow':
+
+		#Send Pillow Image 
+		#e.g image = Image.open("fig.jpg")
+
+		image_file = BytestIO()
+		image.save(image_file, format="JPEG")
+		image_bytes = image_file.getvalue()
+		base64_string = base64.b64encode(image_bytes)
+		return base64_string
